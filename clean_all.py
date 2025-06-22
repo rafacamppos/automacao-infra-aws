@@ -152,11 +152,11 @@ def delete_arn(arn: str, session, dry_run: bool):
         print(f"  ❌ Erro ao deletar {arn}: {e}")
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser(description='Cleanup AWS: delete ALL resources via ResourceGroupsTaggingAPI')
     parser.add_argument('--region', default=None, help='Região AWS')
     parser.add_argument('--delete', action='store_true', help='Executa deleção real (default é dry-run)')
-    args = parser.parse_args()
+    args = parser.parse_args(args)
 
     # Carrega credenciais
     access_key, secret_key = load_credentials(CREDENTIALS_PATH)

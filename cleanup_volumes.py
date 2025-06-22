@@ -54,17 +54,21 @@ def delete_available_volumes(session, region, dry_run=False):
         except ClientError as e:
             print(f"  ❌ Erro ao deletar volume {vid}: {e}")
 
-if __name__ == '__main__':
+def main(args=None):
     import argparse
 
     parser = argparse.ArgumentParser(description="Limpa volumes EBS disponíveis na AWS")
     parser.add_argument('--region', default='sa-east-1', help='Região AWS (default: sa-east-1)')
     parser.add_argument('--delete', action='store_true', help='Executa deleção real (default é dry-run)')
-    args = parser.parse_args()
+    parsed = parser.parse_args(args)
 
     # Carrega credenciais e cria sessão
     ak, sk = load_credentials(CREDENTIALS_PATH)
-    session = create_session(args.region, ak, sk)
+    session = create_session(parsed.region, ak, sk)
 
     # Executa limpeza
-    delete_available_volumes(session, args.region, dry_run=not args.delete)
+    delete_available_volumes(session, parsed.region, dry_run=not parsed.delete)
+
+
+if __name__ == '__main__':
+    main()
