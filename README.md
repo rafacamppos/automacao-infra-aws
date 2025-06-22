@@ -27,3 +27,13 @@ python cleanup_resources.py --region us-east-1 --delete
 ```
 
 > **Warning**: Deleting resources is irreversible. Ensure you really want to remove all listed resources before using the `--delete` flag.
+
+## Docker
+
+A Docker image is built and published automatically to Docker Hub from the `main` branch. You can run the cleanup scripts using:
+
+```bash
+docker run --rm -v $(pwd)/config:/app/config DOCKERHUB_USERNAME/automacao-infra-aws:latest
+```
+
+Replace `DOCKERHUB_USERNAME` with the Docker Hub user configured in the workflow secrets.
