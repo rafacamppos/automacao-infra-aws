@@ -2,7 +2,7 @@ import boto3
 import argparse
 from typing import List
 
-import config
+from . import config
 
 
 def get_session(region: str) -> boto3.Session:

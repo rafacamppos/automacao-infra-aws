@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Centraliza a execução dos scripts de limpeza."""
 import argparse
-import clean_all
-import cleanup_volumes
+from . import clean_all
+from . import cleanup_volumes
 
 
 def main():
