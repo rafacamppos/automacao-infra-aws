@@ -10,20 +10,20 @@ This repository contains a simple Python script that lists and optionally delete
 pip install boto3
 ```
 
-2. Edit `config.py` to set your default `REGION`, `ACCOUNT_ID` and optionally
+2. Edit `infra_cleanup/config.py` to set your default `REGION`, `ACCOUNT_ID` and optionally
    your AWS credentials. If credentials are left blank, the script falls back to
    the standard AWS CLI configuration or environment variables.
 
 3. List resources in a region (defaults to the region defined in `config.py`):
 
 ```bash
-python cleanup_resources.py --region us-east-1
+python -m infra_cleanup.cleanup_resources --region us-east-1
 ```
 
 4. Delete the listed resources:
 
 ```bash
-python cleanup_resources.py --region us-east-1 --delete
+python -m infra_cleanup.cleanup_resources --region us-east-1 --delete
 ```
 
 > **Warning**: Deleting resources is irreversible. Ensure you really want to remove all listed resources before using the `--delete` flag.

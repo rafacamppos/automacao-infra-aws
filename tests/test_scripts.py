@@ -29,8 +29,10 @@ botocore.exceptions = exceptions
 sys.modules['botocore'] = botocore
 sys.modules['botocore.exceptions'] = exceptions
 
-import clean_all
-import cleanup_volumes
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
+from infra_cleanup import clean_all
+from infra_cleanup import cleanup_volumes
 
 
 def test_load_credentials(tmp_path):
