@@ -17,8 +17,9 @@ def main():
     if args.delete:
         ca_args.append('--delete')
 
-    clean_all.main(ca_args)
     cleanup_volumes.main(ca_args)
+    clean_all.main(ca_args)
+    
 
 
 if __name__ == '__main__':

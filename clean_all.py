@@ -118,7 +118,7 @@ def delete_arn(arn: str, session, dry_run: bool):
             if rtype == 'instance':
                 instance = session.resource('ec2').Instance(rid)
                 state = instance.state.get('Name') if hasattr(instance, 'state') else None
-                if state == 'terminated':
+                if state == 'terminated' or state == None :
                     print(f"  ⚠️ Instância {rid} já está encerrada e não gera cobrança.")
                 else:
                     instance.terminate()
