@@ -66,3 +66,29 @@ def test_delete_available_volumes():
     session = MySession()
     cleanup_volumes.delete_available_volumes(session, 'sa-east-1')
     assert deleted == ['v1', 'v2']
+
+
+def test_delete_arn_instance_already_terminated(capsys):
+    class DummyInstance:
+        def __init__(self):
+            self.state = {'Name': 'terminated'}
+            self.terminated_called = False
+        def terminate(self):
+            self.terminated_called = True
+
+    dummy_instance = DummyInstance()
+
+    class DummyResource:
+        def Instance(self, instance_id):
+            return dummy_instance
+
+    class MySession(DummySession):
+        def resource(self, name):
+            assert name == 'ec2'
+            return DummyResource()
+
+    session = MySession()
+    clean_all.delete_arn('arn:aws:ec2:sa-east-1:123456789012:instance/i-123', session, dry_run=True)
+    captured = capsys.readouterr().out
+    assert dummy_instance.terminated_called is False
+    assert 'já está encerrada' in captured

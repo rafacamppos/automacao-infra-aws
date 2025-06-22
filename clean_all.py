@@ -116,7 +116,12 @@ def delete_arn(arn: str, session, dry_run: bool):
         # Cliente genérico para serviços suportados
         if svc == 'ec2':
             if rtype == 'instance':
-                session.resource('ec2').Instance(rid).terminate()
+                instance = session.resource('ec2').Instance(rid)
+                state = instance.state.get('Name') if hasattr(instance, 'state') else None
+                if state == 'terminated':
+                    print(f"  ⚠️ Instância {rid} já está encerrada e não gera cobrança.")
+                else:
+                    instance.terminate()
             elif rtype == 'vpc':
                 cleanup_vpc(session, rid)
             else:
